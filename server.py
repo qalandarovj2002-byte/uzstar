@@ -455,15 +455,18 @@ class UZStarHandler(SimpleHTTPRequestHandler):
 
 def main():
     init_db()
-    host=os.environ.get("UZSTAR_HOST","127.0.0.1")
-    try: port=int(os.environ.get("UZSTAR_PORT","8000"))
-    except ValueError: raise SystemExit("UZSTAR_PORT raqam bo‘lishi kerak.")
+    # Render kabi hostinglar PORT beradi; lokal ishga tushirishda 8000 ishlatiladi.
+    try:
+        port = int(os.environ.get("PORT", os.environ.get("UZSTAR_PORT", "8000")))
+    except ValueError:
+        raise SystemExit("PORT yoki UZSTAR_PORT raqam bo‘lishi kerak.")
+    host = os.environ.get("UZSTAR_HOST", "0.0.0.0" if os.environ.get("PORT") else "127.0.0.1")
     class Server(ThreadingHTTPServer):
         daemon_threads=True
         allow_reuse_address=True
     server=Server((host,port),lambda *a,**kw: UZStarHandler(*a,directory=str(BASE_DIR),**kw))
-    print("\nUZStar 2.6 backend ishga tushdi")
-    print(f"Manzil: http://localhost:{port}")
+    print("\nUZStar backend ishga tushdi")
+    print(f"Manzil: http://{host}:{port}")
     print(f"SQLite baza: {DB_PATH}")
     print("To‘xtatish: Ctrl+C\n")
     try: server.serve_forever(poll_interval=0.5)
