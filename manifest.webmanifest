@@ -1,0 +1,14 @@
+{
+  "name": "UZStar — O‘zbek video olami",
+  "short_name": "UZStar",
+  "description": "O‘zbek tilidagi video platforma prototipi",
+  "lang": "uz-UZ",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#10111b",
+  "theme_color": "#10111b",
+  "icons": [
+    {"src":"./icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
