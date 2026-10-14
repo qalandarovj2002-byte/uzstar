@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: uzstar
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python server.py
+    healthCheckPath: /
+    envVars:
+      - key: UZSTAR_DATA_DIR
+        value: /var/data
+    disk:
+      name: uzstar-data
+      mountPath: /var/data
+      sizeGB: 10
